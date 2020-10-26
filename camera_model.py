@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class pinhole_camera:
     def __init__(self, K, width, height):
         self.K = K
