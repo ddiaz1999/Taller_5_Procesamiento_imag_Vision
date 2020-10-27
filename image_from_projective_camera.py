@@ -3,6 +3,7 @@ import os
 import json
 from camera_model import *
 
+# Draw lines of cube 3D proyected in 2D
 def drawLines():
     cv2.line(image_projective, (cube_2D[0][0], cube_2D[0][1]), (cube_2D[1][0], cube_2D[1][1]), (255, 0, 255), 3)
     cv2.line(image_projective, (cube_2D[0][0], cube_2D[0][1]), (cube_2D[3][0], cube_2D[3][1]), (255, 0, 255), 3)
@@ -30,6 +31,7 @@ if __name__ == '__main__':
     K, d, h, tilt, pan = json_data.values()
     K = np.array(K)
 
+    # 
     width = 585
     height = 1040
 
@@ -39,11 +41,11 @@ if __name__ == '__main__':
     # create camera
     camera = projective_camera(K, width, height, R, t)
 
+    # Create 3D cube, with vertices
     side = 1
     half_side = side/2
     cube_vertices = np.array([[half_side, half_side, -half_side], [half_side, -half_side, -half_side], [-half_side, -half_side, -half_side], [-half_side, half_side, -half_side],
-
-                        [half_side, half_side, half_side], [half_side, -half_side, half_side], [-half_side, -half_side, half_side], [-half_side, half_side, half_side]])
+                              [half_side, half_side, half_side], [half_side, -half_side, half_side], [-half_side, -half_side, half_side], [-half_side, half_side, half_side]])
 
     cube_2D = projective_camera_project(cube_vertices, camera)
     print(cube_2D)
@@ -53,6 +55,3 @@ if __name__ == '__main__':
 
     cv2.imshow("image_projective", image_projective)
     cv2.waitKey(0)
-
-
-
