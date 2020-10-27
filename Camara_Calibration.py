@@ -4,20 +4,19 @@ import glob
 import os
 import json
 
-w = 7
-h = 7
-
 # termination criteria
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
+width = 7
+height = 7
 # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
-objp = np.zeros((h * w, 3), np.float32)
-objp[:, :2] = np.mgrid[0:w, 0:h].T.reshape(-1, 2)
+objp = np.zeros((height * width, 3), np.float32)
+objp[:, :2] = np.mgrid[0:width, 0:height].T.reshape(-1, 2)
 # Arrays to store object points and image points from all the images.
 objpoints = []  # 3d point in real world space
 imgpoints = []  # 2d points in image plane.
 
-path = r'.\PC_images' #r'.\Phone_images'
+path = input('Ingrese ruta de la carpeta con las imagenes: ')#r'.\PC_images' #r'.\Phone_images'
 path_file = os.path.join(path, 'image*.jpg')
 
 images = glob.glob(path_file)
@@ -26,7 +25,7 @@ for fname in images:
     img = cv2.imread(fname)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # Find the chess board corners
-    ret, corners = cv2.findChessboardCorners(gray, (w, h), None)
+    ret, corners = cv2.findChessboardCorners(gray, (width, height), None)
 
     # If found, add object points, image points (after refining them)
     if ret == True:
@@ -36,7 +35,7 @@ for fname in images:
         imgpoints.append(corners2)
 
         # Draw and display the corners
-        img = cv2.drawChessboardCorners(img, (w, h), corners2, ret)
+        img = cv2.drawChessboardCorners(img, (width, height), corners2, ret)
         cv2.imshow('img', img)
         cv2.waitKey(250)
 
